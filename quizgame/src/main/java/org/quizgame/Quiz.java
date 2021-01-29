@@ -3,6 +3,7 @@ package org.quizgame;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Quiz {
@@ -12,6 +13,9 @@ public class Quiz {
     String question;
     String answer1, answer2, answer3, answer4;
     int correctAnswerIndex;
+
+    @OneToOne
+    private SubCategory subcategory;
 
     public Quiz() {
     }
@@ -70,5 +74,13 @@ public class Quiz {
 
     public void setCorrectAnswerIndex(int correctAnswerIndex) {
         this.correctAnswerIndex = correctAnswerIndex;
+    }
+
+    public SubCategory getSubcategory() {
+        return subcategory;
+    }
+
+    public void setSubcategory(SubCategory subcategory) {
+        this.subcategory = subcategory;
     }
 }

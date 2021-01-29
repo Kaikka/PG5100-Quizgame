@@ -1,8 +1,8 @@
 package org.quizgame;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Category {
@@ -11,7 +11,11 @@ public class Category {
 
     String name;
 
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL) // Look into exactly what this is, yoinked from solution
+    private List<SubCategory> subcategories;
+
     public Category() {
+        subcategories = new ArrayList<>();
     }
 
     public Long getId() {
@@ -29,4 +33,13 @@ public class Category {
     public void setName(String name) {
         this.name = name;
     }
+
+    public List<SubCategory> getSubcategories() {
+        return subcategories;
+    }
+
+    public void setSubcategory(SubCategory subcategory) {
+        this.subcategories.add(subcategory);
+    }
+
 }

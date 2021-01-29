@@ -1,8 +1,6 @@
 package org.quizgame;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class SubCategory {
@@ -10,6 +8,11 @@ public class SubCategory {
     private Long id;
 
     String name;
+
+
+    @ManyToOne
+    private Category category;
+
 
     public SubCategory() {
     }
@@ -28,5 +31,13 @@ public class SubCategory {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }
