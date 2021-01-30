@@ -49,77 +49,19 @@ class QuizEntityTest {
     @Test
     public void testQuiz() {
 
-        Quiz quiz = new Quiz();
-        quiz.setQuestion("WoW real main class?");
-        quiz.setAnswer1("Priest");
-        quiz.setAnswer2("Paladin");
-        quiz.setAnswer3("Monk");
-        quiz.setAnswer4("Shaman");
-        quiz.setCorrectAnswerIndex(1);
+        Quiz quiz = createQuiz();
 
-        //EntityManagerFactory factory = Persistence.createEntityManagerFactory("DB");
-        //EntityManager em = factory.createEntityManager();
-
-        /*EntityTransaction tx = em.getTransaction();
-        tx.begin();
-
-        try {
-            em.persist(quiz);
-            tx.commit();
-        } catch (Exception e) {
-            System.out.println("ERROR");
-            tx.rollback();
-        } finally {
-            em.close();
-            factory.close();
-        }*/
-        persistInATransaction(quiz);
+        assertTrue(persistInATransaction(quiz));
     }
 
     @Test
     public void testQuizWithSubcategory() {
 
-        Category category = new Category();
-        category.setName("Test category");
-        SubCategory subcategory = new SubCategory();
-        subcategory.setName("Test Subcategory");
+        Category category = createCategory("Test category");
+        SubCategory subCategory = createSubCategory("Test subcategory", category);
+        Quiz quiz = createQuiz(subCategory);
 
-        category.setSubcategory(subcategory);
-
-
-        Quiz quiz = createQuiz(subcategory);
-
-        assertTrue(persistInATransaction(quiz,category,subcategory));
-    }
-
-    private SubCategory createSubCategory(String name, Category category) {
-        SubCategory subcategory = new SubCategory();
-        subcategory.setName(name);
-        subcategory.setCategory(category);
-
-        return subcategory;
-    }
-
-    private Category createCategory(String name) {
-        Category category = new Category();
-        category.setName(name);
-
-        return category;
-    }
-
-    private Quiz createQuiz(SubCategory subcategory) {
-        Quiz quiz = new Quiz();
-
-        // Premade quiz for all createQuiz, can (and should) be edited to make quiz with parameters or something
-        quiz.setQuestion("WoW real main class?");
-        quiz.setAnswer1("Priest");
-        quiz.setAnswer2("Paladin");
-        quiz.setAnswer3("Monk");
-        quiz.setAnswer4("Shaman");
-        quiz.setCorrectAnswerIndex(1);
-        quiz.setSubcategory(subcategory);
-
-        return quiz;
+        assertTrue(persistInATransaction(quiz,category,subCategory));
     }
 
     @Test
@@ -148,5 +90,42 @@ class QuizEntityTest {
         List<Quiz> quizzes2 = query2.getResultList();
         assertEquals(4, quizzes2.size());
 
+    }
+
+
+    // help methods
+
+    private SubCategory createSubCategory(String name, Category category) {
+        SubCategory subCategory = new SubCategory();
+        subCategory.setName(name);
+        subCategory.setCategory(category);
+
+        return subCategory;
+    }
+
+    private Category createCategory(String name) {
+        Category category = new Category();
+        category.setName(name);
+
+        return category;
+    }
+
+    private Quiz createQuiz() {
+        return createQuiz(null);
+    }
+
+    private Quiz createQuiz(SubCategory subcategory) {
+        Quiz quiz = new Quiz();
+
+        // Premade quiz for all createQuiz, can (and should) be edited to make quiz with parameters or something
+        quiz.setQuestion("WoW real main class?");
+        quiz.setAnswer1("Priest");
+        quiz.setAnswer2("Paladin");
+        quiz.setAnswer3("Monk");
+        quiz.setAnswer4("Shaman");
+        quiz.setCorrectAnswerIndex(1);
+        quiz.setSubcategory(subcategory);
+
+        return quiz;
     }
 }
