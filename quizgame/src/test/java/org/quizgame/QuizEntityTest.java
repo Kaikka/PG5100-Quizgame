@@ -86,14 +86,8 @@ class QuizEntityTest {
 
         category.setSubcategory(subcategory);
 
-        Quiz quiz = new Quiz();
-        quiz.setQuestion("WoW real main class?");
-        quiz.setAnswer1("Priest");
-        quiz.setAnswer2("Paladin");
-        quiz.setAnswer3("Monk");
-        quiz.setAnswer4("Shaman");
-        quiz.setCorrectAnswerIndex(1);
-        quiz.setSubcategory(subcategory);
+
+        Quiz quiz = createQuiz(subcategory);
 
         assertTrue(persistInATransaction(quiz,category,subcategory));
     }
