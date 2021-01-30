@@ -89,7 +89,6 @@ class QuizEntityTest {
         TypedQuery<Quiz> query2 = em.createQuery("Select q from Quiz q where q.subcategory.category.name = 'JEE'", Quiz.class);
         List<Quiz> quizzes2 = query2.getResultList();
         assertEquals(4, quizzes2.size());
-
     }
 
 
