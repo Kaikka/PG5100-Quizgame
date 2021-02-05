@@ -1,16 +1,23 @@
 package org.quizgame;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class SubCategory {
-    @Id @GeneratedValue
+
+    @Id
+    @GeneratedValue
     private Long id;
 
+    @NotBlank
+    @Size(max = 128)
     String name;
 
-
     @ManyToOne
+    @NotNull
     private Category category;
 
 

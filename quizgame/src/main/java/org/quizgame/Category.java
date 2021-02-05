@@ -1,14 +1,21 @@
 package org.quizgame;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Category {
-    @Id @GeneratedValue
+
+    @Id
+    @GeneratedValue
     private Long id;
 
+    @Column(unique = true)
+    @NotBlank
+    @Size(max = 128)
     String name;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL) // Look into exactly what this is, yoinked from solution
