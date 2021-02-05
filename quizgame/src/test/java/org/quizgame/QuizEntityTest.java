@@ -1,57 +1,22 @@
 package org.quizgame;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javax.persistence.*;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 
-class QuizEntityTest {
-
-    private EntityManagerFactory factory;
-    private EntityManager em;
-
-    @BeforeEach
-    public void init() {
-        factory = Persistence.createEntityManagerFactory("DB");
-        em = factory.createEntityManager();
-    }
-
-    @AfterEach
-    public void tearDown() {
-        em.close();
-        factory.close();
-    }
-
-    private boolean persistInATransaction(Object... obj) {
-        EntityTransaction tx = em.getTransaction();
-        tx.begin();
-
-        try {
-            for(Object o : obj) {
-                em.persist(o);
-            }
-            tx.commit();
-        } catch (Exception e) {
-            System.out.println("FAILED TRANSACTION: " + e.toString());
-            tx.rollback();
-            return false;
-        }
-        return true;
-    }
+class QuizEntityTest extends EntityTestBase {
 
     @Test
     public void testQuiz() {
 
         Quiz quiz = createQuiz();
 
-        assertTrue(persistInATransaction(quiz));
+        assertFalse(persistInATransaction(quiz));
     }
 
     @Test
@@ -59,9 +24,11 @@ class QuizEntityTest {
 
         Category category = createCategory("Test category");
         SubCategory subCategory = createSubCategory("Test subcategory", category);
-        Quiz quiz = createQuiz(subCategory);
+        //category.getSubcategories().add(subCategory); // is this really needed?
+        Quiz quiz = createQuiz("Test quiz", subCategory);
 
-        assertTrue(persistInATransaction(quiz,category,subCategory));
+        // Quiz has @NotNull for subcategory, so it depends on subCategory being added first
+        assertTrue(persistInATransaction(category,subCategory,quiz));
     }
 
     @Test
@@ -75,10 +42,10 @@ class QuizEntityTest {
 
         assertTrue(persistInATransaction(JEE, JPA, EJB, JSF));
 
-        Quiz quiz1 = createQuiz(JPA);
-        Quiz quiz2 = createQuiz(JPA);
-        Quiz quiz3 = createQuiz(EJB);
-        Quiz quiz4 = createQuiz(JSF);
+        Quiz quiz1 = createQuiz("JPA", JPA);
+        Quiz quiz2 = createQuiz("JPA2", JPA);
+        Quiz quiz3 = createQuiz("EJB", EJB);
+        Quiz quiz4 = createQuiz("JSF", JSF);
 
         assertTrue(persistInATransaction(quiz1, quiz2, quiz3, quiz4));
 
@@ -89,42 +56,5 @@ class QuizEntityTest {
         TypedQuery<Quiz> query2 = em.createQuery("Select q from Quiz q where q.subcategory.category.name = 'JEE'", Quiz.class);
         List<Quiz> quizzes2 = query2.getResultList();
         assertEquals(4, quizzes2.size());
-    }
-
-
-    // help methods
-
-    private SubCategory createSubCategory(String name, Category category) {
-        SubCategory subCategory = new SubCategory();
-        subCategory.setName(name);
-        subCategory.setCategory(category);
-
-        return subCategory;
-    }
-
-    private Category createCategory(String name) {
-        Category category = new Category();
-        category.setName(name);
-
-        return category;
-    }
-
-    private Quiz createQuiz() {
-        return createQuiz(null);
-    }
-
-    private Quiz createQuiz(SubCategory subcategory) {
-        Quiz quiz = new Quiz();
-
-        // Premade quiz for all createQuiz, can (and should) be edited to make quiz with parameters or something
-        quiz.setQuestion("WoW real main class?");
-        quiz.setAnswer1("Priest");
-        quiz.setAnswer2("Paladin");
-        quiz.setAnswer3("Monk");
-        quiz.setAnswer4("Shaman");
-        quiz.setCorrectAnswerIndex(1);
-        quiz.setSubcategory(subcategory);
-
-        return quiz;
     }
 }

@@ -1,21 +1,45 @@
 package org.quizgame;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import org.hibernate.validator.constraints.Range;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Quiz {
+
     @Id @GeneratedValue
     private Long id;
 
-    String question;
-    String answer1, answer2, answer3, answer4;
-    int correctAnswerIndex;
-
-    @OneToOne
+    @NotNull
+    @ManyToOne
     private SubCategory subcategory;
+
+    @Size(max = 128)
+    @Column(unique = true)
+    @NotBlank
+    String question;
+
+    @Size(max = 128)
+    @NotBlank
+    String answer1;
+
+    @Size(max = 128)
+    @NotBlank
+    String answer2;
+
+    @Size(max = 128)
+    @NotBlank
+    String answer3;
+
+    @Size(max = 128)
+    @NotBlank
+    String answer4;
+
+    @Range(min = 0, max = 3)
+    int correctAnswerIndex;
 
     public Quiz() {
     }
