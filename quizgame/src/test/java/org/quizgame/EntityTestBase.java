@@ -10,8 +10,8 @@ import javax.persistence.Persistence;
 
 public abstract class EntityTestBase {
 
-    public EntityManagerFactory factory;
-    public EntityManager em;
+    private EntityManagerFactory factory;
+    protected EntityManager em;
 
     @BeforeEach
     public void init() {
@@ -44,7 +44,7 @@ public abstract class EntityTestBase {
 
     // help methods
 
-    public SubCategory createSubCategory(String name, Category category) {
+    protected SubCategory createSubCategory(String name, Category category) {
         SubCategory subCategory = new SubCategory();
         subCategory.setName(name);
 
@@ -54,7 +54,7 @@ public abstract class EntityTestBase {
         return subCategory;
     }
 
-    public Category createCategory(String name) {
+    protected Category createCategory(String name) {
         Category category = new Category();
         category.setName(name);
 
@@ -64,11 +64,11 @@ public abstract class EntityTestBase {
     /**
      *  Using this method will lead to constraints always failing
      */
-    public Quiz createQuiz() {
+    protected Quiz createQuiz() {
         return createQuiz("Question", null);
     }
 
-    public Quiz createQuiz(String question, SubCategory subcategory) {
+    protected Quiz createQuiz(String question, SubCategory subcategory) {
         Quiz quiz = new Quiz();
 
         quiz.setQuestion(question);
