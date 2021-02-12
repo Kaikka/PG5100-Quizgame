@@ -1,6 +1,9 @@
 package org.quizgame;
 
 import org.junit.jupiter.api.Test;
+import org.quizgame.entity.Category;
+import org.quizgame.entity.Quiz;
+import org.quizgame.entity.SubCategory;
 
 import javax.persistence.*;
 

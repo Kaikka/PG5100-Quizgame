@@ -1,4 +1,4 @@
-package org.quizgame;
+package org.quizgame.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;

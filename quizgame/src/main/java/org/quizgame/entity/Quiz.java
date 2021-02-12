@@ -1,4 +1,4 @@
-package org.quizgame;
+package org.quizgame.entity;
 
 import org.hibernate.validator.constraints.Range;
 

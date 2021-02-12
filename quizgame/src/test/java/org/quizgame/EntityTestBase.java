@@ -2,6 +2,9 @@ package org.quizgame;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.quizgame.entity.Category;
+import org.quizgame.entity.Quiz;
+import org.quizgame.entity.SubCategory;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
