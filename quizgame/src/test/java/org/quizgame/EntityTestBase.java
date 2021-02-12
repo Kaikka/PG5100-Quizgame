@@ -48,6 +48,7 @@ public abstract class EntityTestBase {
     // help methods
 
     protected SubCategory createSubCategory(String name, Category category) {
+
         SubCategory subCategory = new SubCategory();
         subCategory.setName(name);
 
@@ -58,6 +59,7 @@ public abstract class EntityTestBase {
     }
 
     protected Category createCategory(String name) {
+
         Category category = new Category();
         category.setName(name);
 
