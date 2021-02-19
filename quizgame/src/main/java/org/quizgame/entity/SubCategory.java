@@ -40,7 +40,7 @@ public class SubCategory {
         this.name = name;
     }
 
-    public Category getCategory() {
+    public Category getParent() {
         return category;
     }
 

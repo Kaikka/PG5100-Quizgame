@@ -1,4 +1,4 @@
-package org.quizgame;
+package org.quizgame.entity;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

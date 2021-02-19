@@ -1,7 +1,6 @@
-package org.quizgame;
+package org.quizgame.entity;
 
 import org.junit.jupiter.api.Test;
-import org.quizgame.entity.Category;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;

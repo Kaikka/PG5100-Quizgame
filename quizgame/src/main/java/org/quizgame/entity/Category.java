@@ -19,7 +19,7 @@ public class Category {
     String name;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL) // Look into exactly what this is, yoinked from solution
-    private List<SubCategory> subcategories;
+    private final List<SubCategory> subcategories;
 
     public Category() {
         subcategories = new ArrayList<>();
