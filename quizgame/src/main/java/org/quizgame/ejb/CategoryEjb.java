@@ -40,6 +40,8 @@ public class CategoryEjb {
         parent.getSubcategories().add(subCategory); // is this really needed?
         subCategory.setCategory(parent);
 
+        em.persist(subCategory);
+
         return subCategory.getId();
     }
 
@@ -53,7 +55,8 @@ public class CategoryEjb {
             // below is sexy way of Hibernate.initialize(c.getSubcategories()), but is this needed?
             //categories.stream().map(Category::getSubcategories).forEach(Hibernate::initialize);
             for (Category c : categories) {
-                Hibernate.initialize(c);
+                //Hibernate.initialize(c);
+                c.getSubcategories().size();
             }
         }
 
@@ -65,7 +68,8 @@ public class CategoryEjb {
         Category category = em.find(Category.class, id);
 
         if (withSub && category != null) {
-            Hibernate.initialize(category);
+            category.getSubcategories().size();
+            //Hibernate.initialize(category);
         }
 
         return category;
